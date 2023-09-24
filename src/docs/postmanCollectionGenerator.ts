@@ -8,6 +8,7 @@ import testData from '@test/testData.spec';
 import TestDataSpec from '@test/testData.spec';
 import { integerEnumDocumentation } from '@/helpers/enumHelpers';
 import path from 'path';
+import { Language } from '@/helpers/localization';
 
 export async function generatePostmanCollection(): Promise<{
     status: boolean;
@@ -103,7 +104,7 @@ export async function generatePostmanCollection(): Promise<{
             await MongoUnit.load(testData);
             const loginObjUser = {
                 userID: TestDataSpec.users[0]._id,
-                lang: 'en'
+                lang: Language.en
             };
             let endHeaders: IEndHead = {
                 ip: '-'

@@ -78,6 +78,9 @@ const httpRouter = {
                     else if (endpoint.configuration.access === IEndConfigAccess.logins) {
                         const sessionObj = await validateTokenLogic(request.headers.token?.toString());
                         if (!sessionObj?.userID) return reply.code(403).send('Access Error!');
+                        request.loginObj = {
+                            userID: sessionObj?.userID
+                        };
                         return; // grant access
                     } else if (endpoint.configuration.access === IEndConfigAccess.systemRoles) {
                         const sessionObj = await validateTokenLogic(request.headers.token?.toString());

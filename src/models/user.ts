@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose';
 import { schemaToProps } from '@/helpers/schemaHelpers';
 import { Identifier, ObjectIDType } from '@/helpers/aliases';
 
+export enum IUserGender {
+    male = 'male',
+    female = 'female'
+}
+
 export enum IUserRole {
     superAdmin = 'superAdmin'
 }
@@ -20,6 +25,8 @@ export interface IUser {
     username: string;
     languageCode: string;
 
+    gender: IUserGender;
+
     createdAt: Date;
     roles: IUserRole[];
     to?: (props: IUserProps) => Partial<IUser>;
@@ -34,6 +41,8 @@ const userSchema = new Schema<IUser>(
         lastName: String,
         username: String,
         languageCode: String,
+
+        gender: String,
 
         roles: { type: [String] },
         createdAt: Date
@@ -52,6 +61,6 @@ userSchema.index({
 export const UserModel = model<IUser>('user', userSchema);
 
 export enum IUserProps {
-    system = 'status roles',
-    self = '_id firstName lastName username languageCode'
+    system = '_id status roles',
+    self = '_id firstName lastName username languageCode gender'
 }

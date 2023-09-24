@@ -1,6 +1,7 @@
 import { FastifySchema } from 'fastify/types/schema';
 import { IUser, IUserRole } from '@/models/user';
-import { ObjectIDType } from '@/helpers/aliases';
+import { Identifier, ObjectIDType } from '@/helpers/aliases';
+import { Language } from '@/helpers/localization';
 
 export enum IEndConfigAccess {
     systemRoles = 0,
@@ -23,8 +24,8 @@ type IEndUrl = string;
 
 export interface IEndHead {
     loginObj?: {
-        userID?: ObjectIDType<IUser>;
-        lang?: string;
+        userID?: Identifier<IUser>;
+        lang?: Language;
     };
 
     ip: string;
