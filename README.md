@@ -3,6 +3,13 @@
 This repository is the back-end source code of the telegram [@NovaDatingBot](https://t.me/TeleDatingBot).
 
 This bot is written as a mini-app for [Telegram Mini-App Contest](https://t.me/contest/327).
+It is developed and submitted as a dating mini-app for this contest and lets its users find their ideal friends/partner~~s~~ with mutual interests.
+
+## Features / Flow
+
+- No classic registrations required, users will be registered using their Telegram account.
+- Choose your `Gender`, `Age`, `Interests` and upload your `profile photos` to let other users know you.
+- Find friends based on your interests and filters. Like them and get their telegram username once you've matched!
 
 ## Tech Stack
 
@@ -22,13 +29,20 @@ This bot is written as a mini-app for [Telegram Mini-App Contest](https://t.me/c
 - Clone the project.
 - Run `npm install` to install required dependencies. (You can also consider using pnpm, yarn, bun or any similar package managers)
 - Copy the `.env.example` to `.env` file and enter your mongodb/redis instance data into it.
-- Now just start the app using `npm run build` and `npm run app` command. (or `npm run dev` for development purposes.)
+- Run `npm run start-base-data-dev` to create basic documents in the database. (for example, interest tags)
+- Now just start the app using `npm run build` and `npm run start-app` command. (or `npm run start-app-dev` for development purposes.)
+
+## Scripts
 
 ## Code architecture
 
 > src/
 
 This directory contains all the source code.
+
+> src/baseData
+
+Base documents to be inserted into database, like interest tags.
 
 > src/docs
 
