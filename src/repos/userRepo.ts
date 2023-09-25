@@ -1,5 +1,7 @@
-import { Identifier, ObjectIDType } from '@/helpers/aliases';
+import { Identifier } from '@/helpers/aliases';
 import { IUser, IUserGender, IUserProps, IUserStatus, UserModel } from '@/models/user';
+import { ITag } from '@/models/tag';
+import { UpdateQuery } from 'mongoose';
 
 async function findByID(userID: Identifier<IUser>, props: IUserProps | string) {
     return UserModel.findOne(
@@ -51,9 +53,43 @@ async function setGender(userID: Identifier<IUser>, gender: IUserGender) {
     );
 }
 
+async function setInterests(userID: Identifier<IUser>, interests: Identifier<ITag>[]) {
+    await UserModel.updateOne(
+        {
+            _id: userID
+        },
+        {
+            interests
+        }
+    );
+}
+
+async function edit(
+    userID: Identifier<IUser>,
+    firstName: string,
+    lastName: string,
+    birthdate: Date,
+    profilePhotoObj?: object
+) {
+    let update: UpdateQuery<IUser> = {
+        firstName: firstName,
+        lastName: lastName,
+        birthdate: birthdate
+    };
+    if (profilePhotoObj) update.photo = profilePhotoObj;
+    await UserModel.updateOne(
+        {
+            _id: userID
+        },
+        update
+    );
+}
+
 const UserRepo = {
     findByID,
     upsert,
-    setGender
+    setGender,
+    setInterests,
+    edit
 };
 export default UserRepo;

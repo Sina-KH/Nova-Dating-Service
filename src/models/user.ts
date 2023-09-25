@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { schemaToProps } from '@/helpers/schemaHelpers';
 import { Identifier, ObjectIDType } from '@/helpers/aliases';
+import { ITag } from '@/models/tag';
 
 export enum IUserGender {
     male = 'male',
@@ -25,7 +26,10 @@ export interface IUser {
     username: string;
     languageCode: string;
 
+    photo: Schema.Types.Mixed;
+    birthdate: Date;
     gender: IUserGender;
+    interests: Identifier<ITag>[];
 
     createdAt: Date;
     roles: IUserRole[];
@@ -42,7 +46,10 @@ const userSchema = new Schema<IUser>(
         username: String,
         languageCode: String,
 
+        photo: Schema.Types.Mixed,
+        birthdate: Date,
         gender: String,
+        interests: [String],
 
         roles: { type: [String] },
         createdAt: Date
@@ -62,5 +69,5 @@ export const UserModel = model<IUser>('user', userSchema);
 
 export enum IUserProps {
     system = '_id status roles',
-    self = '_id firstName lastName username languageCode gender'
+    self = '_id firstName lastName username languageCode photo birthdate gender'
 }
