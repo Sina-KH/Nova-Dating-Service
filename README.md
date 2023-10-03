@@ -1,3 +1,7 @@
+## Documentation
+
+This file is the start point of the documentation, detailed .md files are located in the documentations directory and **you can also find links to those files, below in this file**.
+
 ## NovaDating Service
 
 This repository is the back-end source code of the telegram [@NovaDatingBot](https://t.me/TeleDatingBot).
@@ -54,7 +58,9 @@ Finally, If the postman api data is provided in the `.env_test` file, It will up
 
 The endpoints, called using `HTTP` or `SocketIO` routers.
 
-Each endpoint defined its `access level`, `input interface`, `expected output` and `sample data` for the documentation generator.
+Each endpoint defines its `access level`, `input interface`, `expected output` and `sample data` for the documentation generator.
+
+To know more about endpoints and adding new ones into the project, [read this document file](documentations/add_endpoints.md).
 
 > src/helpers
 
