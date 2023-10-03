@@ -3,6 +3,8 @@ import ProfileEditEnd from '@/endpoints/profile/editEnd';
 import ProfileSetGenderEnd from '@/endpoints/profile/setGenderEnd';
 import ProfileSetInterestsEnd from '@/endpoints/profile/setInterestsEnd';
 import ProfileSetSearchFiltersEnd from '@/endpoints/profile/setSearchFiltersEnd';
+import ReactionLikeEnd from '@/endpoints/reaction/likeEnd';
+import ReactionDislikeEnd from '@/endpoints/reaction/dislikeEnd';
 import FileGetEnd from '@/endpoints/file/getEnd';
 import TagListEnd from '@/endpoints/tag/listEnd';
 import ExploreUsersEnd from '@/endpoints/explore/usersEnd';
@@ -13,6 +15,8 @@ const Ends = [
     ProfileSetGenderEnd,
     ProfileSetInterestsEnd,
     ProfileSetSearchFiltersEnd,
+    ReactionLikeEnd,
+    ReactionDislikeEnd,
     FileGetEnd,
     TagListEnd,
     ExploreUsersEnd

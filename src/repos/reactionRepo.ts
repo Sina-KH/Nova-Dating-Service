@@ -25,8 +25,23 @@ async function findByFirstUser(firstUserID: Identifier<IUser>, props: IReactionP
     );
 }
 
+async function findByFirstAndSecondUser(
+    firstUserID: Identifier<IUser>,
+    secondUserID: Identifier<IUser>,
+    props: IReactionProps
+) {
+    return ReactionModel.findOne(
+        {
+            firstUser: firstUserID,
+            secondUser: secondUserID
+        },
+        props
+    );
+}
+
 const ReactionRepo = {
     upsert,
-    findByFirstUser
+    findByFirstUser,
+    findByFirstAndSecondUser
 };
 export default ReactionRepo;

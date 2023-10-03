@@ -3,11 +3,17 @@ import { schemaToProps } from '@/helpers/schemaHelpers';
 import { Identifier } from '@/helpers/aliases';
 import { IUser } from '@/models/user';
 
+export enum IMatchStatus {
+    matched = 1,
+    unmatched = 2
+}
+
 export interface IMatch {
     _id?: Schema.Types.ObjectId;
 
     firstUser: Identifier<IUser>;
     secondUser: Identifier<IUser>;
+    status: IMatchStatus;
 
     createdAt?: Date;
     updatedAt?: Date;
@@ -18,7 +24,8 @@ export interface IMatch {
 const matchSchema = new Schema<IMatch>(
     {
         firstUser: String,
-        secondUser: String
+        secondUser: String,
+        status: Number
     },
     {
         timestamps: true,
@@ -26,7 +33,14 @@ const matchSchema = new Schema<IMatch>(
     }
 );
 matchSchema.methods.to = schemaToProps;
+matchSchema.index({
+    firstUser: 1,
+    secondUser: 1,
+    status: 1
+});
 
 export const MatchModel = model<IMatch>('match', matchSchema);
 
-export enum IMatchProps {}
+export enum IMatchProps {
+    users = 'firstUser secondUser status'
+}

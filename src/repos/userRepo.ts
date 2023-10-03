@@ -14,6 +14,16 @@ async function findByID(userID: Identifier<IUser>, props: IUserProps | string) {
     );
 }
 
+async function findByPublicID(userID: Identifier<IUser>, props: IUserProps | string) {
+    return UserModel.findOne(
+        {
+            pID: userID,
+            status: IUserStatus.active
+        },
+        props
+    );
+}
+
 async function upsert(userData: {
     id: string;
     first_name: string;
@@ -119,6 +129,7 @@ async function search({ excludeIdentifiers, searchInterests, searchGenders }: Se
 
 const UserRepo = {
     findByID,
+    findByPublicID,
     upsert,
     setGender,
     setInterests,

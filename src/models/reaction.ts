@@ -3,7 +3,7 @@ import { schemaToProps } from '@/helpers/schemaHelpers';
 import { Identifier } from '@/helpers/aliases';
 import { IUser } from '@/models/user';
 
-export enum Status {
+export enum IReactionStatus {
     liked = 1,
     disliked = 2
 }
@@ -14,7 +14,7 @@ export interface IReaction {
     firstUser: Identifier<IUser>;
     secondUser: Identifier<IUser>;
 
-    status: Status;
+    status: IReactionStatus;
 
     createdAt?: Date;
     updatedAt?: Date;
@@ -43,5 +43,6 @@ reactionSchema.index({
 export const ReactionModel = model<IReaction>('reaction', reactionSchema);
 
 export enum IReactionProps {
-    secondUser = 'secondUser'
+    secondUser = 'secondUser',
+    status = 'status'
 }

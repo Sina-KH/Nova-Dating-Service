@@ -8,7 +8,7 @@ Each endpoint contains different an `input interface`, `output interface` and th
 
 You can manually define the `.ts` file or use `File Templates` in intellij IDE.
 
-You can get the file template from [here](file_templates/endpoint_file_template.txt) and add it to your ide file.
+You can get the file template from [here](file_templates/endpoint_file_template.txt) and add it to your ide file templates.
 
 ![Screenshot](images/adding_endpoint_using_intellij_template.png)
 
