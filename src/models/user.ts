@@ -17,8 +17,14 @@ export enum IUserStatus {
     inactive = 2
 }
 
+export interface IUserSearchFilters {
+    searchInterests: Identifier<ITag>[];
+    searchGenders: IUserGender[];
+}
+
 export interface IUser {
     _id: Identifier<IUser>;
+    pID: Identifier<IUser>;
     status: IUserStatus;
 
     firstName: string;
@@ -31,7 +37,11 @@ export interface IUser {
     gender: IUserGender;
     interests: Identifier<ITag>[];
 
+    searchFilters: IUserSearchFilters;
+
     createdAt: Date;
+    lastVisit: Date;
+
     roles: IUserRole[];
     to?: (props: IUserProps) => Partial<IUser>;
 }
@@ -39,6 +49,7 @@ export interface IUser {
 const userSchema = new Schema<IUser>(
     {
         _id: String,
+        pID: String,
         status: { type: Number, index: true },
 
         firstName: String,
@@ -51,8 +62,14 @@ const userSchema = new Schema<IUser>(
         gender: String,
         interests: [String],
 
+        searchFilters: {
+            searchInterests: [String],
+            searchGenders: [String]
+        },
+
         roles: { type: [String] },
-        createdAt: Date
+        createdAt: Date,
+        lastVisit: Date
     },
     {
         timestamps: false,
@@ -61,13 +78,15 @@ const userSchema = new Schema<IUser>(
 );
 userSchema.methods.to = schemaToProps;
 userSchema.index({
-    telegramID: 1,
+    _id: 1,
     status: 1
 });
 
 export const UserModel = model<IUser>('user', userSchema);
 
 export enum IUserProps {
-    system = '_id status roles',
-    self = '_id firstName lastName username languageCode photo birthdate gender'
+    system = '_id status roles lastVisit',
+    self = '_id firstName lastName username languageCode photo birthdate gender interests',
+    public = 'pID firstName lastName username photo gender interests',
+    searchFilters = 'searchInterests searchGenders'
 }

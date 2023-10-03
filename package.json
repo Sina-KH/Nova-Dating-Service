@@ -1,6 +1,6 @@
 {
   "name": "nova-dating-service",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Telegram mini-app contest. Dating application backend.",
   "scripts": {
     "build": "npx tsc",
@@ -30,13 +30,15 @@
     "mongoose": "^7.5.2",
     "redis": "^4.6.10",
     "sharp": "^0.32.6",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@tsconfig/node18": "^1.0.1",
     "@types/jsonwebtoken": "^9.0.3",
     "@types/mocha-prepare": "^0.1.0",
     "@types/node": "^18.11.18",
+    "@types/uuid": "^9.0.4",
     "mocha-prepare": "^0.1.0",
     "mongo-unit": "^3.3.0",
     "prettier": "3.0.1",

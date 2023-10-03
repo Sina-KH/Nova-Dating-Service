@@ -1,4 +1,5 @@
 import Localization, { Language } from './localization';
+import { v4 as UUIDv4 } from 'uuid';
 
 export function randomString(length: number) {
     let result = '';
@@ -25,4 +26,8 @@ export function randomStringExcept(length: number, except: string): string {
 
 export function localized(str: string, language?: Language) {
     return (Localization[language || 'en'] || Localization['en'])[str];
+}
+
+export function newUUID() {
+    return UUIDv4();
 }

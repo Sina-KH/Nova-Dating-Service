@@ -1,4 +1,5 @@
 import { ITag, ITagProps, ITagStatus, ITagType, TagModel } from '@/models/tag';
+import { Identifier } from '@/helpers/aliases';
 
 async function upsert(doc: ITag) {
     return TagModel.findOneAndUpdate(
@@ -30,8 +31,20 @@ async function list(type: ITagType, language: string) {
     });
 }
 
+async function findByIdentifiers(ids: Identifier<ITag>[], type: ITagType, props: ITagProps) {
+    return TagModel.find(
+        {
+            _id: { $in: ids },
+            type: type,
+            status: ITagStatus.active
+        },
+        props
+    );
+}
+
 const TagRepo = {
     upsert,
-    list
+    list,
+    findByIdentifiers
 };
 export default TagRepo;

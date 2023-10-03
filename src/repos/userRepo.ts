@@ -1,7 +1,8 @@
 import { Identifier } from '@/helpers/aliases';
-import { IUser, IUserGender, IUserProps, IUserStatus, UserModel } from '@/models/user';
+import { IUser, IUserGender, IUserProps, IUserSearchFilters, IUserStatus, UserModel } from '@/models/user';
 import { ITag } from '@/models/tag';
-import { UpdateQuery } from 'mongoose';
+import { FilterQuery, UpdateQuery } from 'mongoose';
+import { newUUID } from '@/helpers/stringHelpers';
 
 async function findByID(userID: Identifier<IUser>, props: IUserProps | string) {
     return UserModel.findOne(
@@ -35,6 +36,7 @@ async function upsert(userData: {
     if (existingUser) return existingUser;
     return UserModel.create({
         _id: userID,
+        pID: newUUID(),
         firstName: userData.first_name,
         lastName: userData.last_name,
         username: userData.username,
@@ -85,11 +87,44 @@ async function edit(
     );
 }
 
+async function setSearchFilters(userID: Identifier<IUser>, searchFilters: IUserSearchFilters) {
+    await UserModel.updateOne(
+        {
+            _id: userID
+        },
+        {
+            searchFilters
+        }
+    );
+}
+
+interface SearchProps {
+    excludeIdentifiers?: Identifier<IUser>[];
+    searchInterests?: Identifier<ITag>[];
+    searchGenders?: IUserGender[];
+}
+async function search({ excludeIdentifiers, searchInterests, searchGenders }: SearchProps): Promise<Partial<IUser>[]> {
+    const filters: FilterQuery<IUser> = {
+        status: IUserStatus.active
+    };
+    if (excludeIdentifiers?.length) filters._id = { $nin: excludeIdentifiers };
+    if (searchInterests?.length) {
+        filters.interests = { $in: searchInterests };
+    }
+    if (searchGenders?.length) {
+        filters.gender = { $in: searchGenders };
+    }
+    return UserModel.find(filters, IUserProps.public).sort({ updatedAt: -1 }).limit(10);
+}
+
 const UserRepo = {
     findByID,
     upsert,
     setGender,
     setInterests,
-    edit
+    edit,
+    setSearchFilters,
+
+    search
 };
 export default UserRepo;

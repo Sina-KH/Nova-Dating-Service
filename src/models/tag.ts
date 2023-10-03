@@ -42,9 +42,15 @@ tagSchema.index({
     type: 1,
     status: 1
 });
+tagSchema.index({
+    type: 1,
+    status: 1,
+    _id: 1
+});
 
 export const TagModel = model<ITag>('tag', tagSchema);
 
 export enum ITagProps {
+    _id = '_id',
     general = 'type icon names'
 }
