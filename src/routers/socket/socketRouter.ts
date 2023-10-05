@@ -73,7 +73,11 @@ const SocketRouter = {
         const subClient = pubClient.duplicate();
 
         await Promise.all([pubClient.connect(), subClient.connect()]);
-        io.adapter(createAdapter(pubClient, subClient));
+        io.adapter(
+            createAdapter(pubClient, subClient, {
+                key: process.env.REDIS_ADAPTER_KEY
+            })
+        );
         //
 
         (<IGlobal>(<unknown>global)).io = io;

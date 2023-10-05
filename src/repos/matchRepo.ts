@@ -1,6 +1,7 @@
 import { IMatch, IMatchProps, IMatchStatus, MatchModel } from '@/models/match';
-import { Identifier } from '@/helpers/aliases';
+import { Identifier, ObjectIDType } from '@/helpers/aliases';
 import { IUser, IUserProps } from '@/models/user';
+import { FilterQuery } from 'mongoose';
 
 async function upsert(doc: IMatch) {
     return MatchModel.findOneAndUpdate(
@@ -49,7 +50,63 @@ export async function findByUsers(
         {
             $lookup: {
                 from: 'users',
-                let: { secondUser: '$firstUser' },
+                let: { firstUser: '$firstUser' },
+                pipeline: [
+                    { $match: { $expr: { $eq: ['$_id', '$$firstUser'] } } },
+                    {
+                        $project: userProps.split(' ').reduce((pValue, cValue) => {
+                            return { ...pValue, [cValue]: 1 };
+                        }, {})
+                    }
+                ],
+                as: 'firstUser'
+            }
+        },
+        {
+            $lookup: {
+                from: 'users',
+                let: { secondUser: '$secondUser' },
+                pipeline: [
+                    { $match: { $expr: { $eq: ['$_id', '$$secondUser'] } } },
+                    {
+                        $project: userProps.split(' ').reduce((pValue, cValue) => {
+                            return { ...pValue, [cValue]: 1 };
+                        }, {})
+                    }
+                ],
+                as: 'secondUser'
+            }
+        },
+        {
+            $project: props.split(' ').reduce((pValue, cValue) => {
+                return { ...pValue, [cValue]: 1 };
+            }, {})
+        }
+    ]);
+}
+
+async function findByUser(
+    userID: Identifier<IUser>,
+    before: ObjectIDType<IMatch> | undefined,
+    props: IMatchProps,
+    userProps: IUserProps
+) {
+    const matchFilters: FilterQuery<IMatch> = {
+        $or: [{ firstUser: userID }, { secondUser: userID }],
+        status: IMatchStatus.matched
+    };
+    if (before) matchFilters._id = { $lt: before };
+    return MatchModel.aggregate([
+        {
+            $match: matchFilters
+        },
+        {
+            $limit: 1
+        },
+        {
+            $lookup: {
+                from: 'users',
+                let: { firstUser: '$firstUser' },
                 pipeline: [
                     { $match: { $expr: { $eq: ['$_id', '$$firstUser'] } } },
                     {
@@ -87,6 +144,7 @@ export async function findByUsers(
 const ReactionRepo = {
     upsert,
     unMatch,
-    findByUsers
+    findByUsers,
+    findByUser
 };
 export default ReactionRepo;

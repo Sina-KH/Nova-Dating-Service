@@ -120,6 +120,7 @@ export async function generatePostmanCollection(): Promise<{
                     };
                     break;
             }
+            console.log('working on: ' + end.url);
             const response = await end.handler(
                 endHeaders,
                 // @ts-ignore

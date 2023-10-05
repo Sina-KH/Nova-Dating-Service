@@ -6,7 +6,9 @@ import { IMatchProps } from '@/models/match';
 
 // called whenever two users are newly matched
 export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
-    const match = await MatchRepo.findByUsers(userIDs[0], userIDs[1], IMatchProps.users, IUserProps.matchedUsers);
+    const matches = await MatchRepo.findByUsers(userIDs[0], userIDs[1], IMatchProps.users, IUserProps.matchedUsers);
+    if (!matches.length) throw new Error();
+    const match = matches[0];
 
     // TODO:: send each user a message on robot
 
