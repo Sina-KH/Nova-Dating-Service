@@ -3,6 +3,7 @@ import { IUser, IUserGender, IUserProps, IUserSearchFilters, IUserStatus, UserMo
 import { ITag } from '@/models/tag';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { newUUID } from '@/helpers/stringHelpers';
+import { ageToDate } from '@/helpers/dateHelpers';
 
 async function findByID(userID: Identifier<IUser>, props: IUserProps | string) {
     return UserModel.findOne(
@@ -112,8 +113,16 @@ interface SearchProps {
     excludeIdentifiers?: Identifier<IUser>[];
     searchInterests?: Identifier<ITag>[];
     searchGenders?: IUserGender[];
+    searchAgeFrom?: number;
+    searchAgeTo?: number;
 }
-async function search({ excludeIdentifiers, searchInterests, searchGenders }: SearchProps): Promise<Partial<IUser>[]> {
+async function search({
+    excludeIdentifiers,
+    searchInterests,
+    searchGenders,
+    searchAgeFrom,
+    searchAgeTo
+}: SearchProps): Promise<Partial<IUser>[]> {
     const filters: FilterQuery<IUser> = {
         status: IUserStatus.active
     };
@@ -123,6 +132,15 @@ async function search({ excludeIdentifiers, searchInterests, searchGenders }: Se
     }
     if (searchGenders?.length) {
         filters.gender = { $in: searchGenders };
+    }
+    if (searchAgeFrom) {
+        filters.birthdate = { $lte: ageToDate(searchAgeFrom) };
+    }
+    if (searchAgeTo) {
+        filters.birthdate = {
+            ...filters.birthdate,
+            $gte: ageToDate(searchAgeTo)
+        };
     }
     return UserModel.find(filters, IUserProps.public).sort({ updatedAt: -1 }).limit(10);
 }

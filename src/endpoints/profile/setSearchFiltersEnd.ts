@@ -8,6 +8,8 @@ import { setSearchFiltersLogic } from '@/logic/profile/setSearchFiltersLogic';
 interface IProfileSetSearchFiltersEndInput extends IEndInput {
     searchInterests: Identifier<ITag>[];
     searchGenders: IUserGender[];
+    searchAgeFrom?: number;
+    searchAgeTo?: number;
 }
 
 interface IProfileSetSearchFiltersEndResponse {}
@@ -26,7 +28,9 @@ const ProfileSetSearchFiltersEnd: IEnd<IProfileSetSearchFiltersEndInput, IProfil
                 searchGenders: {
                     type: 'array',
                     items: { type: 'string', enum: [IUserGender.male, IUserGender.female] }
-                }
+                },
+                searchAgeFrom: { type: 'integer', minimum: 18, maximum: 100 },
+                searchAgeTo: { type: 'integer', minimum: 18, maximum: 100 }
             },
             required: ['searchInterests', 'searchGenders']
         }
@@ -37,7 +41,9 @@ const ProfileSetSearchFiltersEnd: IEnd<IProfileSetSearchFiltersEndInput, IProfil
     ): Promise<IEndOutput<IProfileSetSearchFiltersEndResponse>> {
         await setSearchFiltersLogic(heads.loginObj!.userID!, {
             searchInterests: input.searchInterests,
-            searchGenders: input.searchGenders
+            searchGenders: input.searchGenders,
+            searchAgeFrom: input.searchAgeFrom,
+            searchAgeTo: input.searchAgeTo
         });
         return {
             statusCode: 200,

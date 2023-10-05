@@ -15,7 +15,9 @@ export async function exploreUsersLogic(userID: Identifier<IUser>): Promise<{ us
     const searchProps = {
         excludeIdentifiers: [userID].concat(hadReactionToUserIdentifiers.map((it) => it.secondUser)),
         searchInterests: user.searchFilters.searchInterests,
-        searchGenders: user.searchFilters.searchGenders
+        searchGenders: user.searchFilters.searchGenders,
+        searchAgeFrom: user.searchFilters.searchAgeFrom,
+        searchAgeTo: user.searchFilters.searchAgeTo
     };
 
     // search users

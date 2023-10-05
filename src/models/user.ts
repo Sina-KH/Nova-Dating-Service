@@ -20,6 +20,8 @@ export enum IUserStatus {
 export interface IUserSearchFilters {
     searchInterests: Identifier<ITag>[];
     searchGenders: IUserGender[];
+    searchAgeFrom?: number;
+    searchAgeTo?: number;
 }
 
 export interface IUser {
@@ -50,7 +52,7 @@ const userSchema = new Schema<IUser>(
     {
         _id: String,
         pID: String,
-        status: { type: Number, index: true },
+        status: { type: Number, index: true, default: IUserStatus.active },
 
         firstName: String,
         lastName: String,
@@ -64,7 +66,9 @@ const userSchema = new Schema<IUser>(
 
         searchFilters: {
             searchInterests: [String],
-            searchGenders: [String]
+            searchGenders: [String],
+            searchAgeFrom: Number,
+            searchAgeTo: Number
         },
 
         roles: { type: [String] },
