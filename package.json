@@ -1,6 +1,6 @@
 {
   "name": "nova-dating-service",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Telegram mini-app contest. Dating application backend.",
   "scripts": {
     "build": "npx tsc",
