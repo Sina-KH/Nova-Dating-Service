@@ -13,11 +13,11 @@ export async function profileEditLogic(
     firstName: string,
     lastName: string,
     birthdate: Date,
-    gender: IUserGender,
-    interests: Identifier<ITag>[],
-    photo: any
+    gender?: IUserGender,
+    interests?: Identifier<ITag>[],
+    photo?: any
 ) {
-    await tagValidationLogic(interests, ITagType.interests);
+    if (interests?.length) await tagValidationLogic(interests, ITagType.interests);
     const profilePhotoObj = photo
         ? await fileUploadLogic(photo, IFileType.image, IFileUseType.profilePhoto, userID)
         : undefined;

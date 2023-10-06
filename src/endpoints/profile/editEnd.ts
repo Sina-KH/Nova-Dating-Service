@@ -8,8 +8,8 @@ interface IProfileEditEndInput extends IEndInput {
     lastName: string;
     birthdate: string;
     photo: any;
-    gender: IUserGender;
-    interests: string; // comma-separated Identifier<ITag>
+    gender?: IUserGender;
+    interests?: string; // comma-separated Identifier<ITag>
 }
 
 interface IProfileEditEndResponse {
@@ -46,7 +46,7 @@ const ProfileEditEnd: IEnd<IProfileEditEndInput, IProfileEditEndResponse> = {
             input.lastName,
             new Date(input.birthdate),
             input.gender,
-            input.interests.split(','),
+            input.interests?.split(','),
             input.photo
         );
         return {

@@ -100,8 +100,8 @@ interface EditUserUpdates {
     firstName: string;
     lastName: string;
     birthdate: Date;
-    gender: IUserGender;
-    interests: Identifier<ITag>[];
+    gender?: IUserGender;
+    interests?: Identifier<ITag>[];
     profilePhotoObj?: object;
 }
 async function edit(
@@ -112,10 +112,10 @@ async function edit(
     let update: UpdateQuery<IUser> = {
         firstName: firstName,
         lastName: lastName,
-        birthdate: birthdate,
-        gender: gender,
-        interests: interests
+        birthdate: birthdate
     };
+    if (gender) update.gender = gender;
+    if (interests) update.interests = interests;
     if (profilePhotoObj) update.photo = profilePhotoObj;
     return (
         await UserModel.findOneAndUpdate(
