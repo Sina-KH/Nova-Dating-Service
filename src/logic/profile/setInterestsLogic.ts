@@ -1,8 +1,10 @@
 import { Identifier } from '@/helpers/aliases';
 import { IUser, IUserProps, IUserStatus } from '@/models/user';
 import UserRepo from '@/repos/userRepo';
-import { ITag, ITagType } from '@/models/tag';
+import { ITag, ITagProps, ITagType } from '@/models/tag';
 import { tagValidationLogic } from '@/logic/tag/tagValidationLogic';
+import TagRepo from '@/repos/tagRepo';
+import { Language } from '@/helpers/localization';
 
 export async function setInterestsLogic(userID: Identifier<IUser>, interests: Identifier<ITag>[]) {
     await tagValidationLogic(interests, ITagType.interests);
@@ -19,5 +21,13 @@ export async function setInterestsLogic(userID: Identifier<IUser>, interests: Id
         updatedUser.status = IUserStatus.active;
         await UserRepo.setStatus(userID, IUserStatus.active);
     }
-    return updatedUser;
+    return {
+        ...updatedUser,
+        interests: await TagRepo.findByIdentifiers(
+            <Identifier<ITag>[]>updatedUser.interests,
+            ITagType.interests,
+            ITagProps.general,
+            <Language>updatedUser.languageCode
+        )
+    };
 }
