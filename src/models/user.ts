@@ -13,6 +13,7 @@ export enum IUserRole {
 }
 
 export enum IUserStatus {
+    preRegistered = 0,
     active = 1,
     inactive = 2
 }
@@ -52,7 +53,7 @@ const userSchema = new Schema<IUser>(
     {
         _id: String,
         pID: String,
-        status: { type: Number, index: true, default: IUserStatus.active },
+        status: { type: Number, index: true, default: IUserStatus.preRegistered },
 
         firstName: String,
         lastName: String,
@@ -91,7 +92,7 @@ export const UserModel = model<IUser>('user', userSchema);
 export enum IUserProps {
     _id = '_id',
     system = '_id status roles lastVisit',
-    self = '_id firstName lastName username languageCode photo birthdate gender interests',
+    self = '_id firstName lastName username languageCode photo birthdate gender interests status',
     public = 'pID firstName lastName username photo gender interests',
     matchedUsers = '_id pID firstName lastName username photo gender interests',
     searchFilters = 'searchInterests searchGenders'

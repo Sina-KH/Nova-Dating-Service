@@ -3,7 +3,7 @@ import { IUser, IUserGender, IUserProps, IUserSearchFilters, IUserStatus, UserMo
 import { ITag } from '@/models/tag';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { newUUID } from '@/helpers/stringHelpers';
-import { ageToDate } from '@/helpers/dateHelpers';
+import { ageToDate, calculateAge } from '@/helpers/dateHelpers';
 
 async function findByID(userID: Identifier<IUser>, props: IUserProps | string) {
     return UserModel.findOne(
@@ -67,12 +67,29 @@ async function setGender(userID: Identifier<IUser>, gender: IUserGender) {
 }
 
 async function setInterests(userID: Identifier<IUser>, interests: Identifier<ITag>[]) {
-    await UserModel.updateOne(
+    return UserModel.findOneAndUpdate(
         {
             _id: userID
         },
         {
             interests
+        },
+        {
+            new: true
+        }
+    );
+}
+
+async function setStatus(userID: Identifier<IUser>, status: IUserStatus) {
+    return UserModel.findOneAndUpdate(
+        {
+            _id: userID
+        },
+        {
+            status
+        },
+        {
+            new: true
         }
     );
 }
@@ -142,7 +159,16 @@ async function search({
             $gte: ageToDate(searchAgeTo)
         };
     }
-    return UserModel.find(filters, IUserProps.public).sort({ updatedAt: -1 }).limit(10);
+    const users = await UserModel.find(filters, IUserProps.public + ' birthdate')
+        .sort({ updatedAt: -1 })
+        .limit(10)
+        .lean();
+    return users.map((it) => {
+        return {
+            ...it,
+            age: it.birthdate ? calculateAge(it.birthdate) : undefined
+        };
+    });
 }
 
 const UserRepo = {
@@ -151,6 +177,7 @@ const UserRepo = {
     upsert,
     setGender,
     setInterests,
+    setStatus,
     edit,
     setSearchFilters,
 
