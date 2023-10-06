@@ -10,6 +10,7 @@ export default {
             lastName: 'Khalili',
             languageCode: 'en',
             gender: 'male',
+            interests: ['i_photography'],
             status: 1,
             searchFilters: {
                 searchInterests: ['i_photography'],
@@ -23,6 +24,7 @@ export default {
             lastName: 'Ananas',
             languageCode: 'en',
             gender: 'female',
+            interests: ['i_photography'],
             status: 1,
             searchFilters: {
                 searchInterests: ['i_photography'],

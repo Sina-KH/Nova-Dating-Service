@@ -68,18 +68,20 @@ async function setGender(userID: Identifier<IUser>, gender: IUserGender) {
 }
 
 async function setInterests(userID: Identifier<IUser>, interests: Identifier<ITag>[], props: IUserProps) {
-    return UserModel.findOneAndUpdate(
-        {
-            _id: userID
-        },
-        {
-            interests
-        },
-        {
-            new: true,
-            projection: props
-        }
-    );
+    return (
+        await UserModel.findOneAndUpdate(
+            {
+                _id: userID
+            },
+            {
+                interests
+            },
+            {
+                new: true,
+                projection: props
+            }
+        )
+    )?.toObject();
 }
 
 async function setStatus(userID: Identifier<IUser>, status: IUserStatus) {
