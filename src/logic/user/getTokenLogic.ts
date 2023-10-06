@@ -3,6 +3,10 @@ import { Exceptions } from '@/helpers/exceptions';
 import UserRepo from '@/repos/userRepo';
 import { IUserProps } from '@/models/user';
 import { signJWTToken } from '@/helpers/jwtHelpers';
+import TagRepo from '@/repos/tagRepo';
+import { ITag, ITagProps, ITagType } from '@/models/tag';
+import { Identifier } from '@/helpers/aliases';
+import { Language } from '@/helpers/localization';
 
 interface TelegramInitData {
     user: string;
@@ -33,7 +37,15 @@ export async function getTokenLogic(hash: string) {
         session: {
             token
         },
-        user: user.to!(IUserProps.self)
+        user: {
+            ...user.to!(IUserProps.self),
+            interests: await TagRepo.findByIdentifiers(
+                <Identifier<ITag>[]>user.interests,
+                ITagType.interests,
+                ITagProps.general,
+                <Language>user.languageCode
+            )
+        }
     };
 }
 

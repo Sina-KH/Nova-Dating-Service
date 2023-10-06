@@ -38,7 +38,7 @@ export interface IUser {
     photo: Schema.Types.Mixed;
     birthdate: Date;
     gender: IUserGender;
-    interests: Identifier<ITag>[];
+    interests: Identifier<ITag>[] | Partial<ITag>[];
 
     searchFilters: IUserSearchFilters;
 

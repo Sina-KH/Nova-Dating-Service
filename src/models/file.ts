@@ -78,5 +78,5 @@ fileSchema.index({
 export const FileModel = model<IFile>('file', fileSchema);
 
 export enum IFileProps {
-    general = '_id name mimeType hash size fileType useType user'
+    general = '_id name mimeType hash size fileType useType'
 }

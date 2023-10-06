@@ -1,9 +1,10 @@
 import { Identifier } from '@/helpers/aliases';
 import { IUser, IUserGender, IUserProps, IUserSearchFilters, IUserStatus, UserModel } from '@/models/user';
-import { ITag } from '@/models/tag';
+import { ITag, ITagProps } from '@/models/tag';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { newUUID } from '@/helpers/stringHelpers';
 import { ageToDate, calculateAge } from '@/helpers/dateHelpers';
+import { Language } from '@/helpers/localization';
 
 async function findByID(userID: Identifier<IUser>, props: IUserProps | string) {
     return UserModel.findOne(
@@ -95,25 +96,39 @@ async function setStatus(userID: Identifier<IUser>, status: IUserStatus) {
     );
 }
 
+interface EditUserUpdates {
+    firstName: string;
+    lastName: string;
+    birthdate: Date;
+    gender: IUserGender;
+    interests: Identifier<ITag>[];
+    profilePhotoObj?: object;
+}
 async function edit(
     userID: Identifier<IUser>,
-    firstName: string,
-    lastName: string,
-    birthdate: Date,
-    profilePhotoObj?: object
+    { firstName, lastName, birthdate, gender, interests, profilePhotoObj }: EditUserUpdates,
+    props: IUserProps
 ) {
     let update: UpdateQuery<IUser> = {
         firstName: firstName,
         lastName: lastName,
-        birthdate: birthdate
+        birthdate: birthdate,
+        gender: gender,
+        interests: interests
     };
     if (profilePhotoObj) update.photo = profilePhotoObj;
-    await UserModel.updateOne(
-        {
-            _id: userID
-        },
-        update
-    );
+    return (
+        await UserModel.findOneAndUpdate(
+            {
+                _id: userID
+            },
+            update,
+            {
+                new: true,
+                projection: props
+            }
+        )
+    )?.toObject();
 }
 
 async function setSearchFilters(userID: Identifier<IUser>, searchFilters: IUserSearchFilters) {
@@ -134,13 +149,10 @@ interface SearchProps {
     searchAgeFrom?: number;
     searchAgeTo?: number;
 }
-async function search({
-    excludeIdentifiers,
-    searchInterests,
-    searchGenders,
-    searchAgeFrom,
-    searchAgeTo
-}: SearchProps): Promise<Partial<IUser>[]> {
+async function search(
+    { excludeIdentifiers, searchInterests, searchGenders, searchAgeFrom, searchAgeTo }: SearchProps,
+    language: Language
+): Promise<Partial<IUser>[]> {
     const filters: FilterQuery<IUser> = {
         status: IUserStatus.active
     };
@@ -160,10 +172,48 @@ async function search({
             $gte: ageToDate(searchAgeTo)
         };
     }
-    const users = await UserModel.find(filters, IUserProps.public + ' birthdate')
-        .sort({ updatedAt: -1 })
-        .limit(10)
-        .lean();
+    const users = await UserModel.aggregate([
+        {
+            $match: filters
+        },
+        {
+            // populate interests
+            $lookup: {
+                from: 'tags',
+                let: { interests: '$interests' },
+                pipeline: [
+                    { $match: { $expr: { $in: ['$_id', '$$interests'] } } },
+                    {
+                        $project: ITagProps.general.split(' ').reduce((pValue, cValue) => {
+                            if (cValue === 'names') {
+                                // localized name for interest
+                                return {
+                                    ...pValue,
+                                    name: {
+                                        $cond: [
+                                            { $ifNull: ['$names.' + language, null] },
+                                            '$names.' + language,
+                                            '$names.en'
+                                        ]
+                                    }
+                                };
+                            }
+                            return { ...pValue, [cValue]: 1 };
+                        }, {})
+                    }
+                ],
+                as: 'interests'
+            }
+        },
+        {
+            $project: (IUserProps.public + ' birthdate').split(' ').reduce((pValue, cValue) => {
+                return { ...pValue, [cValue]: 1 };
+            }, {})
+        },
+        {
+            $limit: 10
+        }
+    ]);
     return users.map((it) => {
         return {
             ...it,

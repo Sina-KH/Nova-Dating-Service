@@ -3,8 +3,12 @@ import { IUser, IUserProps } from '@/models/user';
 import UserRepo from '@/repos/userRepo';
 import ReactionRepo from '@/repos/reactionRepo';
 import { IReactionProps } from '@/models/reaction';
+import { Language } from '@/helpers/localization';
 
-export async function exploreUsersLogic(userID: Identifier<IUser>): Promise<{ users: Partial<IUser>[] }> {
+export async function exploreUsersLogic(
+    userID: Identifier<IUser>,
+    language: Language
+): Promise<{ users: Partial<IUser>[] }> {
     const user = await UserRepo.findByID(userID, IUserProps.searchFilters);
     if (!user) throw new Error();
 
@@ -21,7 +25,7 @@ export async function exploreUsersLogic(userID: Identifier<IUser>): Promise<{ us
     };
 
     // search users
-    const users = await UserRepo.search(searchProps);
+    const users = await UserRepo.search(searchProps, language);
 
     return {
         users

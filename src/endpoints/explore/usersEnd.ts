@@ -1,6 +1,7 @@
 import IEnd, { IEndConfigAccess, IEndHead, IEndInput, IEndMethod, IEndOutput } from '@/endpoints/IEnd';
 import { IUser } from '@/models/user';
 import { exploreUsersLogic } from '@/logic/explore/exploreUsersLogic';
+import { Language } from '@/helpers/localization';
 
 interface IExploreUsersEndInput extends IEndInput {}
 
@@ -25,7 +26,7 @@ const ExploreUsersEnd: IEnd<IExploreUsersEndInput, IExploreUsersEndResponse> = {
         heads: IEndHead,
         input: IExploreUsersEndInput
     ): Promise<IEndOutput<IExploreUsersEndResponse>> {
-        const { users } = await exploreUsersLogic(heads.loginObj!.userID!);
+        const { users } = await exploreUsersLogic(heads.loginObj!.userID!, heads.loginObj?.lang || Language.en);
         return {
             statusCode: 200,
             response: {
