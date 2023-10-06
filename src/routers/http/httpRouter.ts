@@ -15,6 +15,7 @@ import { ipFromRequest } from '@/helpers/requestHelpers';
 import { validateTokenLogic } from '@/logic/session/validateTokenLogic';
 import UserRepo from '@/repos/userRepo';
 import { IUserProps, IUserRole, IUserStatus } from '@/models/user';
+import path from 'path';
 
 const ajv = new Ajv({ allErrors: true, coerceTypes: true });
 addFormats(ajv);
@@ -26,6 +27,11 @@ const fastify = Fastify({
 fastify.register(import('@fastify/cors'), {});
 fastify.register(import('@fastify/formbody'), {});
 fastify.register(import('fastify-file-upload'), {});
+
+fastify.register(require('@fastify/static'), {
+    root: path.join(__dirname, '..', '..', '..', 'public'),
+    prefix: '/'
+});
 
 function responseError(request: FastifyRequest, reply: FastifyReply, error: Error, additionalInfo?: any) {
     const errorKey = error.message;

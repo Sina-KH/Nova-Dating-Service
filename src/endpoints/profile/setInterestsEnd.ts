@@ -29,10 +29,12 @@ const ProfileSetInterestsEnd: IEnd<IProfileSetInterestsEndInput, IProfileSetInte
         heads: IEndHead,
         input: IProfileSetInterestsEndInput
     ): Promise<IEndOutput<IProfileSetInterestsEndResponse>> {
-        await setInterestsLogic(heads.loginObj!.userID!, input.interests);
+        const user = await setInterestsLogic(heads.loginObj!.userID!, input.interests);
         return {
             statusCode: 200,
-            response: {}
+            response: {
+                user
+            }
         };
     },
     docs: {

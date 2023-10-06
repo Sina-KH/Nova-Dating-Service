@@ -66,7 +66,7 @@ async function setGender(userID: Identifier<IUser>, gender: IUserGender) {
     );
 }
 
-async function setInterests(userID: Identifier<IUser>, interests: Identifier<ITag>[]) {
+async function setInterests(userID: Identifier<IUser>, interests: Identifier<ITag>[], props: IUserProps) {
     return UserModel.findOneAndUpdate(
         {
             _id: userID
@@ -75,7 +75,8 @@ async function setInterests(userID: Identifier<IUser>, interests: Identifier<ITa
             interests
         },
         {
-            new: true
+            new: true,
+            projection: props
         }
     );
 }
