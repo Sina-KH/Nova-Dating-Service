@@ -93,7 +93,7 @@ export const UserModel = model<IUser>('user', userSchema);
 export enum IUserProps {
     _id = '_id',
     system = '_id status roles lastVisit',
-    self = '_id firstName lastName username languageCode photo birthdate gender interests searchFilters status',
+    self = '_id pID firstName lastName username languageCode photo birthdate gender interests searchFilters status',
     public = 'pID firstName lastName username photo gender interests',
     matchedUsers = '_id pID firstName lastName username photo gender interests',
     searchFilters = 'searchFilters'
