@@ -6,6 +6,7 @@ import ProfileSetSearchFiltersEnd from '@/endpoints/profile/setSearchFiltersEnd'
 import ReactionLikeEnd from '@/endpoints/reaction/likeEnd';
 import ReactionDislikeEnd from '@/endpoints/reaction/dislikeEnd';
 import FileGetEnd from '@/endpoints/file/getEnd';
+import HookTelegramEnd from '@/endpoints/hook/telegramEnd';
 import MatchListEnd from '@/endpoints/match/listEnd';
 import TagListEnd from '@/endpoints/tag/listEnd';
 import ExploreUsersEnd from '@/endpoints/explore/usersEnd';
@@ -19,6 +20,7 @@ const Ends = [
     ReactionLikeEnd,
     ReactionDislikeEnd,
     FileGetEnd,
+    HookTelegramEnd,
     MatchListEnd,
     TagListEnd,
     ExploreUsersEnd
