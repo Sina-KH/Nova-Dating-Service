@@ -33,7 +33,7 @@ async function upsert(userData: {
     username?: string;
     language_code?: string;
 }) {
-    const userID = 't_' + userData.id.toString();
+    const userID = userData.id.toString();
     const existingUser = await UserModel.findOneAndUpdate(
         {
             _id: userID

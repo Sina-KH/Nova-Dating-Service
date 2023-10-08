@@ -26,7 +26,11 @@ export async function getTokenLogic(hash: string) {
 
     const userData = (<TelegramInitData>(<unknown>data))?.user;
     if (!userData) throw new Error();
-    const user = await UserRepo.upsert(<TelegramInitDataUser>JSON.parse(userData));
+    const userDataObj = <TelegramInitDataUser>JSON.parse(userData);
+    const user = await UserRepo.upsert({
+        ...userDataObj,
+        id: 't_' + userDataObj.id
+    });
     const token = await signJWTToken({
         userID: user._id,
         lang: user.languageCode,
