@@ -113,7 +113,12 @@ async function findByUser(
             $match: matchFilters
         },
         {
-            $limit: 1
+            $sort: {
+                _id: -1
+            }
+        },
+        {
+            $limit: 10
         },
         {
             $lookup: {
