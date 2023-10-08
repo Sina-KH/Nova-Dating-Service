@@ -25,7 +25,7 @@ const HookTelegramEnd: IEnd<IHookTelegramEndInput, IHookTelegramEndResponse> = {
         input: IHookTelegramEndInput
     ): Promise<IEndOutput<IHookTelegramEndResponse>> {
         // check telegram secret token
-        const secretToken = heads.allHeaders?.['X-Telegram-Bot-Api-Secret-Token'];
+        const secretToken = heads.allHeaders?.['x-telegram-bot-api-secret-token'];
         if (!secretToken || secretToken !== process.env.HOOK_SECRET_TOKEN) {
             if (process.env.DOCS_ENV !== 'true') throw new Error();
         }
