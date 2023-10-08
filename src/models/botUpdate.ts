@@ -5,7 +5,7 @@ import { ITelegramUpdate } from '@/models/types/telegramTypes';
 export interface IBotUpdate {
     _id?: Schema.Types.ObjectId;
 
-    telegramUpdate: ITelegramUpdate;
+    telegramUpdate?: ITelegramUpdate;
 
     createdAt?: Date;
     updatedAt?: Date;

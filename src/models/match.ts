@@ -11,8 +11,8 @@ export enum IMatchStatus {
 export interface IMatch {
     _id?: Schema.Types.ObjectId;
 
-    firstUser: Identifier<IUser>;
-    secondUser: Identifier<IUser>;
+    firstUser: Identifier<IUser> | Partial<IUser>;
+    secondUser: Identifier<IUser> | Partial<IUser>;
     status: IMatchStatus;
 
     createdAt?: Date;

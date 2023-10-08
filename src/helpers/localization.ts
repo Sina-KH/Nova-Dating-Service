@@ -1,15 +1,18 @@
 import { Exceptions } from './exceptions';
+import { DictionaryKeys } from '@/helpers/dictionaryKeys';
 
 const en = {
     [Exceptions.notAuthorized]: 'You are not authorized',
     [Exceptions.badRequest]: 'Bad Request',
-}
+    [DictionaryKeys.openTheApp]: 'Open the dating mini-app right here, and enjoy finding new friends. 🍟🍷⚽️🙊',
+    [DictionaryKeys.youGotAMatch]: '🎉 Your new match! 🥳'
+};
 
 export enum Language {
-    en = 'en',
+    en = 'en'
 }
 
 const Localization: { [key: string]: any } = {
-    [Language.en]: en,
+    [Language.en]: en
 };
 export default Localization;

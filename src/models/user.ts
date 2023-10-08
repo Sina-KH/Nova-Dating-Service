@@ -72,9 +72,9 @@ const userSchema = new Schema<IUser>(
             searchAgeTo: Number
         },
 
-        roles: { type: [String] },
+        roles: { type: [String], select: false },
         createdAt: Date,
-        lastVisit: Date
+        lastVisit: { type: Date, default: Date.now }
     },
     {
         timestamps: false,

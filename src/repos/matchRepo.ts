@@ -34,8 +34,8 @@ export async function findByUsers(
     firstUser: Identifier<IUser>,
     secondUser: Identifier<IUser>,
     props: IMatchProps,
-    userProps: IUserProps
-) {
+    userProps: IUserProps | string
+): Promise<Partial<IMatch>[]> {
     return MatchModel.aggregate([
         {
             $match: {

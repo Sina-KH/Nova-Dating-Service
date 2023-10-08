@@ -28,10 +28,10 @@ async function findByPublicID(userID: Identifier<IUser>, props: IUserProps | str
 
 async function upsert(userData: {
     id: string;
-    first_name: string;
-    last_name: string;
-    username: string;
-    language_code: string;
+    first_name?: string;
+    last_name?: string;
+    username?: string;
+    language_code?: string;
 }) {
     const userID = 't_' + userData.id.toString();
     const existingUser = await UserModel.findOneAndUpdate(
@@ -39,7 +39,8 @@ async function upsert(userData: {
             _id: userID
         },
         {
-            languageCode: userData.language_code
+            languageCode: userData.language_code,
+            lastVisit: new Date()
         },
         {
             new: true

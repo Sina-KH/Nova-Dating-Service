@@ -28,3 +28,13 @@ export interface ITelegramChat {
     title?: 'string';
     username?: 'string';
 }
+
+export interface ITelegramReplyKeyboardMarkup {
+    keyboard: ITelegramKeyboardButton[][];
+}
+
+export interface ITelegramKeyboardButton {
+    web_app?: {
+        url: string;
+    };
+}
