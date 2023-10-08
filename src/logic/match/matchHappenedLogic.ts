@@ -44,14 +44,16 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
 
         // prepare match text message
         const peerUser = peerUsers[userID];
+        const peerUserFullName = ((peerUser.firstName || '') + ' ' + (peerUser.lastName || '')).trim();
+
+        // mark-down link to peer user
         const connectionLink = peerUser._id?.startsWith('t_')
-            ? 'https://t.me/' + peerUser._id?.substring(2)
-            : undefined;
+            ? '\n```\n[' + peerUserFullName + '](tg://user?id=' + peerUser._id?.substring(2) + ')```'
+            : peerUserFullName;
+
+        // message to send
         const message =
-            localized(DictionaryKeys.youGotAMatch, <Language>languageCodes[userID]) +
-            '\n\n' +
-            ((peerUser.firstName || '') + ' ' + (peerUser.lastName || '')).trim() +
-            connectionLink;
+            localized(DictionaryKeys.youGotAMatch, <Language>languageCodes[userID]) + '\n\n' + connectionLink;
 
         // prepare photo data
         const peerPhotoHash = (<IFile>(<unknown>peerUser.photo))?.hash;
