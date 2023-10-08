@@ -48,7 +48,7 @@ const fileSchema = new Schema<IFile>(
     {
         name: String,
         mimeType: String,
-        hash: { type: String, index: true },
+        hash: { type: String, index: true, unique: true },
         size: Number,
 
         path: String,

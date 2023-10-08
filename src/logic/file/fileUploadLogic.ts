@@ -41,7 +41,8 @@ export async function fileUploadLogic(
 
     // save media to hard drive
     let path = process.env.FILE_PATH + '/' + useType + '/' + fileType + '/';
-    let fileName = Crypto.randomBytes(16).toString('hex') + '.' + file.name.split('.').pop();
+    const fileExtension = file.name.split('.').pop();
+    let fileName = Crypto.randomBytes(16).toString('hex') + '.' + fileExtension;
     await mkdirp(path);
 
     if (file.mv) {
@@ -64,7 +65,7 @@ export async function fileUploadLogic(
     let fileData: IFile = {
         name: file.name,
         mimeType: mimeType,
-        hash: Crypto.randomBytes(16).toString('hex'),
+        hash: Crypto.randomBytes(16).toString('hex') + '.' + fileExtension,
         size: file.data.byteLength,
         path: fileName,
         fileType,
