@@ -63,6 +63,12 @@ export async function findByUsers(
             }
         },
         {
+            $unwind: {
+                path: '$firstUser',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        {
             $lookup: {
                 from: 'users',
                 let: { secondUser: '$secondUser' },
@@ -75,6 +81,12 @@ export async function findByUsers(
                     }
                 ],
                 as: 'secondUser'
+            }
+        },
+        {
+            $unwind: {
+                path: '$secondUser',
+                preserveNullAndEmptyArrays: true
             }
         },
         {
@@ -119,6 +131,12 @@ async function findByUser(
             }
         },
         {
+            $unwind: {
+                path: '$firstUser',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        {
             $lookup: {
                 from: 'users',
                 let: { secondUser: '$secondUser' },
@@ -131,6 +149,12 @@ async function findByUser(
                     }
                 ],
                 as: 'secondUser'
+            }
+        },
+        {
+            $unwind: {
+                path: '$secondUser',
+                preserveNullAndEmptyArrays: true
             }
         },
         {

@@ -48,7 +48,7 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
 
         // mark-down link to peer user
         const connectionLink = peerUser._id?.startsWith('t_')
-            ? '\n```\n[' + peerUserFullName + '](tg://user?id=' + peerUser._id?.substring(2) + ')```'
+            ? '[' + peerUserFullName + '](tg://user?id=' + peerUser._id?.substring(2) + ')'
             : peerUserFullName;
 
         // message to send
@@ -60,8 +60,10 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
         const peerPhotoURL = peerPhotoHash ? process.env.API_PATH + `file?hash=${peerPhotoHash}` : undefined;
 
         // trigger bot message send
-        sendBotMessage(userID, { text: message, photo: { photoURL: peerPhotoURL } })
+        sendBotMessage(userID, { text: message, photo: { photoURL: peerPhotoURL } }, 'Markdown')
             .then(() => {})
-            .catch(() => {});
+            .catch((e) => {
+                console.log(e);
+            });
     }
 }

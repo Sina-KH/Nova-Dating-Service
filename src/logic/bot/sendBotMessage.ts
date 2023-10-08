@@ -11,7 +11,8 @@ export async function sendBotMessage(
         text: string;
         photo?: { photoPath?: string; photoURL?: string };
         replyKeyboardMarkup?: ITelegramReplyKeyboardMarkup;
-    }
+    },
+    parse_mode?: 'Markdown'
 ) {
     if (!userID.startsWith('t_')) return;
     const telegramID = userID.substring(2);
@@ -31,6 +32,8 @@ export async function sendBotMessage(
 
     // reply keyboard markup
     if (replyKeyboardMarkup) data.append('reply_markup', JSON.stringify(replyKeyboardMarkup));
+
+    if (parse_mode) data.append('parse_mode', parse_mode);
 
     let config = {
         method: 'post',
