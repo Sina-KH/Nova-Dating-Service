@@ -30,7 +30,7 @@ export interface ITelegramChat {
 }
 
 export interface ITelegramReplyKeyboardMarkup {
-    keyboard: ITelegramKeyboardButton[][];
+    inline_keyboard: ITelegramKeyboardButton[][];
 }
 
 export interface ITelegramKeyboardButton {

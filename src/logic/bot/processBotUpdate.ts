@@ -27,7 +27,7 @@ export async function processBotUpdate(botUpdate: IBotUpdate) {
         await sendBotMessage('t_' + from.id, {
             text: localized(DictionaryKeys.openTheApp),
             replyKeyboardMarkup: {
-                keyboard: [
+                inline_keyboard: [
                     [
                         {
                             text: 'Nova Dating App',
