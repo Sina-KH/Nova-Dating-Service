@@ -27,6 +27,7 @@ export interface IEndHead {
         userID?: Identifier<IUser>;
         lang?: Language;
     };
+    allHeaders: { [key: string]: string };
 
     ip: string;
 }

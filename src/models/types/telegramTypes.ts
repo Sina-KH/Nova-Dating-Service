@@ -34,6 +34,7 @@ export interface ITelegramReplyKeyboardMarkup {
 }
 
 export interface ITelegramKeyboardButton {
+    text: string;
     web_app?: {
         url: string;
     };

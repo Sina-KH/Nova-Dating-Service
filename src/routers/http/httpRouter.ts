@@ -127,6 +127,7 @@ const httpRouter = {
 
                     const headers: IEndHead = {
                         loginObj: request.loginObj,
+                        allHeaders: request.headers,
                         ip: ipFromRequest(request)
                     };
                     try {

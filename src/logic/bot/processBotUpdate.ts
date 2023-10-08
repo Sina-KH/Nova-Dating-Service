@@ -30,6 +30,7 @@ export async function processBotUpdate(botUpdate: IBotUpdate) {
                 keyboard: [
                     [
                         {
+                            text: 'Nova Dating App',
                             web_app: {
                                 url: process.env.WEBAPP_URL || ''
                             }
