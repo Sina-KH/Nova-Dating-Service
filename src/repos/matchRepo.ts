@@ -101,7 +101,7 @@ async function findByUser(
     userID: Identifier<IUser>,
     before: ObjectIDType<IMatch> | undefined,
     props: IMatchProps,
-    userProps: IUserProps
+    userProps: IUserProps | string
 ) {
     const matchFilters: FilterQuery<IMatch> = {
         $or: [{ firstUser: userID }, { secondUser: userID }],

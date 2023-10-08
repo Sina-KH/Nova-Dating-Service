@@ -8,6 +8,7 @@ import { localized } from '@/helpers/stringHelpers';
 import { DictionaryKeys } from '@/helpers/dictionaryKeys';
 import { Language } from '@/helpers/localization';
 import { IFile } from '@/models/file';
+import { calculateAge } from '@/helpers/dateHelpers';
 
 // called whenever two users are newly matched
 export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
@@ -16,22 +17,42 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
         userIDs[1],
         IMatchProps.users,
         // languageCode is used to create bot messages and will be removed from final response
-        IUserProps.matchedUsers + ' languageCode'
+        IUserProps.matchedUsers + ' birthdate languageCode'
     );
     if (!matches.length) throw new Error();
-    const match = matches[0];
+    let match = matches[0];
+
+    // extract first user and second user
+    const firstUser = <Partial<IUser>>match.firstUser;
+    const secondUser = <Partial<IUser>>match.secondUser;
+    if (!firstUser || !secondUser) throw new Error();
 
     // extract and remove language codes from final response
     const languageCodes = {
-        [(<Partial<IUser>>match.firstUser)._id!]: (<Partial<IUser>>match.firstUser).languageCode,
-        [(<Partial<IUser>>match.secondUser)._id!]: (<Partial<IUser>>match.secondUser).languageCode
+        [firstUser._id!]: firstUser.languageCode,
+        [secondUser._id!]: secondUser.languageCode
     };
-    delete (<Partial<IUser>>match.firstUser).languageCode;
-    delete (<Partial<IUser>>match.secondUser).languageCode;
+    delete firstUser.languageCode;
+    delete secondUser.languageCode;
     const peerUsers = {
-        [(<Partial<IUser>>match.firstUser)._id!]: <Partial<IUser>>match.secondUser,
-        [(<Partial<IUser>>match.secondUser)._id!]: <Partial<IUser>>match.firstUser
+        [firstUser._id!]: secondUser,
+        [secondUser._id!]: firstUser
     };
+
+    // set age on match object and update it
+    match = {
+        ...match,
+        firstUser: {
+            ...firstUser,
+            age: firstUser.birthdate ? calculateAge(firstUser.birthdate!) : undefined
+        },
+        secondUser: {
+            ...secondUser,
+            age: secondUser.birthdate ? calculateAge(secondUser.birthdate!) : undefined
+        }
+    };
+    delete firstUser.birthdate;
+    delete secondUser.birthdate;
 
     // send match object on socket io
     for (const userID of userIDs) {

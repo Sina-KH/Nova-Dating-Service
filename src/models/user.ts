@@ -46,6 +46,7 @@ export interface IUser {
     lastVisit: Date;
 
     roles: IUserRole[];
+    age?: number;
     to?: (props: IUserProps) => Partial<IUser>;
 }
 
