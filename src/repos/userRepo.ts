@@ -180,6 +180,14 @@ async function search(
             $match: filters
         },
         {
+            $sort: {
+                lastVisit: -1
+            }
+        },
+        {
+            $limit: 10
+        },
+        {
             // populate interests
             $lookup: {
                 from: 'tags',
@@ -217,9 +225,6 @@ async function search(
                     _id: 0
                 }
             )
-        },
-        {
-            $limit: 10
         }
     ]);
     return users.map((it) => {
