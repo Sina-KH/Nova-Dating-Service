@@ -2,7 +2,7 @@
 
 To add a new endpoint to the project, you need to create an endpoint ts file into `src/endpoints` directory, and add it into `ends.ts` file.
 
-Each endpoint contains different an `input interface`, `output interface` and the `main endpoint object`.
+Each endpoint contains an `input interface`, `output interface` and the `main endpoint object`.
 
 ## Creating the file
 

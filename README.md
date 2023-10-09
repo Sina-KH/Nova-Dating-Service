@@ -1,19 +1,21 @@
-## Documentation
-
-This file is the start point of the documentation, detailed .md files are located in the documentations directory and **you can also find links to those files, below in this file**.
-
-## NovaDating Service
+# 🍾 [NovaDating TelegramWebApp](http://t.me/NovaDatingBot/app)
 
 This repository is the back-end source code of the telegram [@NovaDatingBot](https://t.me/TeleDatingBot).
 
 This bot is written as a mini-app for [Telegram Mini-App Contest](https://t.me/contest/327).
 It is developed and submitted as a dating mini-app for this contest and lets its users find their ideal friends/partner~~s~~ with mutual interests.
 
-## Features / Flow
+## 📚 Documentation
 
-- No classic registrations required, users will be registered using their Telegram account.
-- Choose your `Gender`, `Age`, `Interests` and upload your `profile photos` to let other users know you.
-- Find friends based on your interests and filters. Like them and get their telegram username once you've matched!
+This file is the start point of the documentation, detailed .md files are located in the documentations directory and **you can also find links to those files, below in this file**.
+
+## 🤓 Features / User Flow
+
+- [x] 🤘 No classic registrations required, users will be registered using their Telegram account.
+- [x] 🥸 Choose your `Gender`, `Age`, `Interests` and upload your `profile photos` to let other users know you.
+- [x] 🔥 Find friends based on your interests and filters. Like them and get their telegram username once you've matched!
+- [x] 📱 Telegram color-palette support. The app will use the active theme of the telegram.
+- [ ] 📍 For now, It shows all registered users, but I will add location filters in future revisions.
 
 ## Tech Stack
 
@@ -73,6 +75,8 @@ Each endpoint calls related logic tree to do the task. Finally, the result will 
 > src/models
 
 Each model represents a collection in the primary database (MongoDB). Including its `interface`, `schema`, `indexes` and `properties to project` in different situations.
+
+To know more about models and adding new ones into the project, [read this document file](documentations/add_models.md).
 
 > src/repos
 
