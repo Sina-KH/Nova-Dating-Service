@@ -107,7 +107,7 @@ const SocketRouter = {
                 } catch (e) {
                     sendError(ack, e instanceof Error ? e : Error());
                 }
-                ack({});
+                if (ack) ack({});
             });
 
             // configure to accept endpoint requests
@@ -140,15 +140,14 @@ const SocketRouter = {
                             },
                             data
                         );
-                        if (!ack) return;
-                        ack(response.response);
+                        if (ack) ack(response.response);
                     } catch (error) {
                         sendError(ack, error instanceof Error ? error : Error(), socket.data?.lang);
                     }
                 });
             }
         });
-        io.listen(parseInt(process.env.SOCKET_PORT || '15281'));
+        io.listen(parseInt(process.env.SOCKET_PORT || '10202'));
     }
 };
 

@@ -20,7 +20,7 @@ This file is the start point of the documentation, detailed .md files are locate
 - [x] 🔥 Find friends based on your interests and filters. Like them and get their telegram username once you've matched!
 - [x] 📱 Telegram color-palette support. The app will use the active theme of the telegram.
 - [x] 📝  Multi-language support.
-- [x] ⚡️ Socket.IO adapter in codebase to easily add real-time features later.
+- [x] ⚡️ Socket.IO adapter in codebase to easily add real-time features. **`New Match` event is now implemented.**
 - [x] 🐇 Clustered back-end forks.
 - [x] 🤖 Auto postman collection generator/uploader.
 - [ ] 📍 For now, It shows all registered users, but I will add location filters in future revisions.
