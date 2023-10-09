@@ -30,7 +30,7 @@ const ProfileEditEnd: IEnd<IProfileEditEndInput, IProfileEditEndResponse> = {
                 lastName: { type: 'string' },
                 birthdate: { type: 'string', format: 'date-time' },
                 photo: { type: 'object' },
-                gender: { type: 'string', enum: [IUserGender.male, IUserGender.female] },
+                gender: { type: 'string', enum: [IUserGender.male, IUserGender.female, IUserGender.beyondBinary] },
                 interests: { type: 'string' }
             },
             required: ['firstName', 'lastName', 'birthdate']

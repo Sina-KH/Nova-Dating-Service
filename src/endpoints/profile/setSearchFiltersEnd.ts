@@ -27,7 +27,7 @@ const ProfileSetSearchFiltersEnd: IEnd<IProfileSetSearchFiltersEndInput, IProfil
                 searchInterests: { type: 'array', items: { type: 'string' } },
                 searchGenders: {
                     type: 'array',
-                    items: { type: 'string', enum: [IUserGender.male, IUserGender.female] }
+                    items: { type: 'string', enum: [IUserGender.male, IUserGender.female, IUserGender.beyondBinary] }
                 },
                 searchAgeFrom: { type: 'integer', minimum: 18, maximum: 100 },
                 searchAgeTo: { type: 'integer', minimum: 18, maximum: 100 }

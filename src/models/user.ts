@@ -5,7 +5,8 @@ import { ITag } from '@/models/tag';
 
 export enum IUserGender {
     male = 'male',
-    female = 'female'
+    female = 'female',
+    beyondBinary = 'beyondBinary'
 }
 
 export enum IUserRole {

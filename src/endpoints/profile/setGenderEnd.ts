@@ -18,7 +18,7 @@ const ProfileSetGenderEnd: IEnd<IProfileSetGenderEndInput, IProfileSetGenderEndR
         body: {
             type: 'object',
             properties: {
-                gender: { type: 'string', enum: [IUserGender.male, IUserGender.female] }
+                gender: { type: 'string', enum: [IUserGender.male, IUserGender.female, IUserGender.beyondBinary] }
             },
             required: ['gender']
         }
