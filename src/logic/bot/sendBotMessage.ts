@@ -14,6 +14,8 @@ export async function sendBotMessage(
     },
     parse_mode?: 'Markdown'
 ) {
+    if (process.env.DOCS_ENV === 'true') return;
+
     if (!userID.startsWith('t_')) return;
     const telegramID = userID.substring(2);
 

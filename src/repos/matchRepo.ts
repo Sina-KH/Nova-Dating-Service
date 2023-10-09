@@ -170,10 +170,86 @@ async function findByUser(
     ]);
 }
 
+async function findByIDAndUser(
+    _id: ObjectIDType<IMatch>,
+    userID: Identifier<IUser>,
+    props: IMatchProps,
+    userProps: IUserProps
+) {
+    const matches = await MatchModel.aggregate([
+        {
+            $match: {
+                _id: _id,
+                $or: [
+                    {
+                        firstUser: userID
+                    },
+                    {
+                        secondUser: userID
+                    }
+                ],
+                status: IMatchStatus.matched
+            }
+        },
+        {
+            $limit: 1
+        },
+        {
+            $lookup: {
+                from: 'users',
+                let: { firstUser: '$firstUser' },
+                pipeline: [
+                    { $match: { $expr: { $eq: ['$_id', '$$firstUser'] } } },
+                    {
+                        $project: userProps.split(' ').reduce((pValue, cValue) => {
+                            return { ...pValue, [cValue]: 1 };
+                        }, {})
+                    }
+                ],
+                as: 'firstUser'
+            }
+        },
+        {
+            $unwind: {
+                path: '$firstUser',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        {
+            $lookup: {
+                from: 'users',
+                let: { secondUser: '$secondUser' },
+                pipeline: [
+                    { $match: { $expr: { $eq: ['$_id', '$$secondUser'] } } },
+                    {
+                        $project: userProps.split(' ').reduce((pValue, cValue) => {
+                            return { ...pValue, [cValue]: 1 };
+                        }, {})
+                    }
+                ],
+                as: 'secondUser'
+            }
+        },
+        {
+            $unwind: {
+                path: '$secondUser',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        {
+            $project: props.split(' ').reduce((pValue, cValue) => {
+                return { ...pValue, [cValue]: 1 };
+            }, {})
+        }
+    ]);
+    return matches.length ? matches[0] : null;
+}
+
 const ReactionRepo = {
     upsert,
     unMatch,
     findByUsers,
-    findByUser
+    findByUser,
+    findByIDAndUser
 };
 export default ReactionRepo;

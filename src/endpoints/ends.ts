@@ -8,6 +8,7 @@ import ReactionDislikeEnd from '@/endpoints/reaction/dislikeEnd';
 import FileGetEnd from '@/endpoints/file/getEnd';
 import HookTelegramEnd from '@/endpoints/hook/telegramEnd';
 import MatchListEnd from '@/endpoints/match/listEnd';
+import MatchRequestLinkEnd from '@/endpoints/match/requestLinkEnd';
 import TagListEnd from '@/endpoints/tag/listEnd';
 import ExploreUsersEnd from '@/endpoints/explore/usersEnd';
 
@@ -22,6 +23,7 @@ const Ends = [
     FileGetEnd,
     HookTelegramEnd,
     MatchListEnd,
+    MatchRequestLinkEnd,
     TagListEnd,
     ExploreUsersEnd
 ];
