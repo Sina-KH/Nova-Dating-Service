@@ -5,6 +5,8 @@ This repository is the back-end source code of the telegram [@NovaDatingBot](htt
 This bot is written as a mini-app for [Telegram Mini-App Contest](https://t.me/contest/327).
 It is developed and submitted as a dating mini-app for this contest and lets its users find their ideal friends/partner~~s~~ with mutual interests.
 
+You can also find the [**FRONT-END SOURCE CODE** here](https://github.com/Sina-KH/Nova-Dating-TWA).
+
 ## 📚 Documentation
 
 This file is the start point of the documentation, detailed .md files are located in the documentations directory and **you can also find links to those files, below in this file**.
@@ -15,6 +17,10 @@ This file is the start point of the documentation, detailed .md files are locate
 - [x] 🥸 Choose your `Gender`, `Age`, `Interests` and upload your `profile photos` to let other users know you.
 - [x] 🔥 Find friends based on your interests and filters. Like them and get their telegram username once you've matched!
 - [x] 📱 Telegram color-palette support. The app will use the active theme of the telegram.
+- [x] 📝  Multi-language support.
+- [x] ⚡️ Socket.IO adapter in codebase to easily add real-time features later.
+- [x] 🐇 Clustered back-end forks.
+- [x] 🤖 Auto postman collection generator/uploader.
 - [ ] 📍 For now, It shows all registered users, but I will add location filters in future revisions.
 
 ## Tech Stack
@@ -38,7 +44,20 @@ This file is the start point of the documentation, detailed .md files are locate
 - Run `npm run start-base-data-dev` to create basic documents in the database. (for example, interest tags)
 - Now just start the app using `npm run build` and `npm run start-app` command. (or `npm run start-app-dev` for development purposes.)
 
+## Env file creation
+
+To know more about project's `.env` file variables, please [read here](documentations/env_variables.md).
+
 ## Scripts
+
+- **build:** build the project code
+- **start-app:** can run the code after build
+- **start-app-dev:** to watch the source and develop
+- **start-base-data:** to create interests (basic db documents)
+- **start-base-data-dev:** to create base data without building the project
+- 🔥 **docs:** auto generate postman collection with sample input/output
+- **test:** run tests
+- **coverage:** test coverage status
 
 ## Code architecture
 
