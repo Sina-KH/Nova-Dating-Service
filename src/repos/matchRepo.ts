@@ -1,7 +1,7 @@
 import { IMatch, IMatchProps, IMatchStatus, MatchModel } from '@/models/match';
 import { Identifier, ObjectIDType } from '@/helpers/aliases';
 import { IUser, IUserProps } from '@/models/user';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 
 async function upsert(doc: IMatch) {
     return MatchModel.findOneAndUpdate(
@@ -179,7 +179,7 @@ async function findByIDAndUser(
     const matches = await MatchModel.aggregate([
         {
             $match: {
-                _id: _id,
+                _id: new Types.ObjectId(<string>_id),
                 $or: [
                     {
                         firstUser: userID
