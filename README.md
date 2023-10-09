@@ -7,6 +7,8 @@ It is developed and submitted as a dating mini-app for this contest and lets its
 
 You can also find the [**FRONT-END SOURCE CODE** here](https://github.com/Sina-KH/Nova-Dating-TWA).
 
+Feel free to use this source code as your new project's template. I tried to develop it as easy to understand and clear, as I could. It is NOT over-engineered at all!
+
 ## 📚 Documentation
 
 This file is the start point of the documentation, detailed .md files are located in the documentations directory and **you can also find links to those files, below in this file**.
