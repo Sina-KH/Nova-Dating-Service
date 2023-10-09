@@ -209,9 +209,14 @@ async function search(
             }
         },
         {
-            $project: (IUserProps.public + ' birthdate').split(' ').reduce((pValue, cValue) => {
-                return { ...pValue, [cValue]: 1 };
-            }, {})
+            $project: (IUserProps.public + ' birthdate').split(' ').reduce(
+                (pValue, cValue) => {
+                    return { ...pValue, [cValue]: 1 };
+                },
+                {
+                    _id: 0
+                }
+            )
         },
         {
             $limit: 10
