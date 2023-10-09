@@ -36,7 +36,7 @@ This file is the start point of the documentation, detailed .md files are locate
 - MongoDB
 - Redis
 
-## Build
+## Build and run using node.js
 
 - Clone the project.
 - Run `npm install` to install required dependencies. (You can also consider using pnpm, yarn, bun or any similar package managers)
@@ -44,11 +44,19 @@ This file is the start point of the documentation, detailed .md files are locate
 - Run `npm run start-base-data-dev` to create basic documents in the database. (for example, interest tags)
 - Now just start the app using `npm run build` and `npm run start-app` command. (or `npm run start-app-dev` for development purposes.)
 
-## Env file creation
+## Build and run using Docker
+
+If you prefer to use docker instead of `node` and `pm2`, You can easily deploy the code using `docker-compose`:
+
+- Create `.env` file.
+- Update files path in `docker-compose.yml` file
+- Just run `docker-compose up -d`
+
+## .env file creation guidance
 
 To know more about project's `.env` file variables, please [read here](documentations/env_variables.md).
 
-## Scripts
+## More about project scripts
 
 - **build:** build the project code
 - **start-app:** can run the code after build
