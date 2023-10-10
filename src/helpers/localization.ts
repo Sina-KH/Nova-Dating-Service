@@ -8,7 +8,7 @@ const en = {
     [DictionaryKeys.youGotAMatch]: '🎉 Your new match! 🥳',
     [DictionaryKeys.chatLink]: 'Start the chat right now! 😜',
     [DictionaryKeys.setUsernamePlease]:
-        'Please make sure you have a username on your account, so you match with users, they can receive your account link. ' +
+        'Please make sure you have a username on your account, so whenever you match with someone, they can receive your account link. ' +
         'Users without username and with restricted privacy settings, may fail to share their connection link with match parties!'
 };
 
