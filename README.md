@@ -17,7 +17,7 @@ This file is the start point of the documentation, detailed .md files are locate
 
 - [x] 🤘 No classic registrations required, users will be registered using their Telegram account.
 - [x] 🥸 Choose your `Gender`, `Age`, `Interests` and upload your `profile photos` to let other users know you.
-- [x] 🔥 Find friends based on your interests and filters. Like them and get their telegram username once you've matched!
+- [x] 🔥 Find friends based on your interests and filters. Like them and get their telegram account once you've matched!
 - [x] 📱 Telegram color-palette support. The app will use the active theme of the telegram.
 - [x] 📝  Multi-language support.
 - [x] ⚡️ Socket.IO adapter in codebase to easily add real-time features. **`New Match` event is now implemented.**

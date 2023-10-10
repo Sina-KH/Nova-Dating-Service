@@ -12,15 +12,14 @@ import { calculateAge } from '@/helpers/dateHelpers';
 
 // called whenever two users are newly matched
 export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
-    const matches = await MatchRepo.findByUsers(
+    let match = await MatchRepo.findByUsers(
         userIDs[0],
         userIDs[1],
         IMatchProps.users,
         // languageCode is used to create bot messages and will be removed from final response
-        IUserProps.matchedUsers + ' birthdate languageCode'
+        IUserProps.matchedUsers + ' _id birthdate languageCode'
     );
-    if (!matches.length) throw new Error();
-    let match = matches[0];
+    if (!match) throw new Error();
 
     // extract first user and second user
     const firstUser = <Partial<IUser>>match.firstUser;
@@ -71,6 +70,11 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
         const connectionLink = peerUser._id?.startsWith('t_')
             ? '[' + peerUserFullName + '](tg://user?id=' + peerUser._id?.substring(2) + ')'
             : peerUserFullName;
+        if (!peerUser._id?.startsWith('t_')) {
+            console.log('error in peer user _id,', {
+                peerUser
+            });
+        }
 
         // message to send
         const message =
