@@ -75,10 +75,14 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
                 peerUser
             });
         }
+        const usernameConnectionLink = peerUser.username ? '\n@' + peerUser.username : '';
 
         // message to send
         const message =
-            localized(DictionaryKeys.youGotAMatch, <Language>languageCodes[userID]) + '\n\n' + connectionLink;
+            localized(DictionaryKeys.youGotAMatch, <Language>languageCodes[userID]) +
+            '\n\n' +
+            connectionLink +
+            usernameConnectionLink;
 
         // prepare photo data
         const peerPhotoHash = (<IFile>(<unknown>peerUser.photo))?.hash;

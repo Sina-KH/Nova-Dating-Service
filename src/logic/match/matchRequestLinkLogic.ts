@@ -31,9 +31,10 @@ export async function matchRequestLinkLogic(
             peerUser
         });
     }
+    const usernameConnectionLink = peerUser.username ? '\n@' + peerUser.username : '';
 
     // message to send
-    const message = localized(DictionaryKeys.chatLink, language) + '\n\n' + connectionLink;
+    const message = localized(DictionaryKeys.chatLink, language) + '\n\n' + connectionLink + usernameConnectionLink;
 
     // prepare photo data
     const peerPhotoHash = (<IFile>(<unknown>peerUser.photo))?.hash;

@@ -25,7 +25,12 @@ export async function processBotUpdate(botUpdate: IBotUpdate) {
     // check if message is '/start'
     if (message.text === '/start' || message.text === '/dating') {
         await sendBotMessage('t_' + from.id, {
-            text: localized(DictionaryKeys.openTheApp) + '\n\n' + process.env.WEBAPP_URL,
+            text:
+                localized(DictionaryKeys.openTheApp) +
+                '\n\n' +
+                process.env.WEBAPP_URL +
+                '\n\n' +
+                localized(DictionaryKeys.setUsernamePlease),
             replyKeyboardMarkup: {
                 inline_keyboard: [
                     [

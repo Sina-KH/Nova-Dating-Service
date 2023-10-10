@@ -1,5 +1,6 @@
 export enum DictionaryKeys {
     openTheApp = 'dict.openTheApp',
     youGotAMatch = 'dict.youGotAMatch',
-    chatLink = 'dict.chatLink'
+    chatLink = 'dict.chatLink',
+    setUsernamePlease = 'dict.setUsernamePlease'
 }
