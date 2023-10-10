@@ -95,7 +95,7 @@ export async function findByUsers(
             }, {})
         }
     ]);
-    return matches.length ? matches[0].toObject() : null;
+    return matches.length ? matches[0] : null;
 }
 
 async function findByUser(

@@ -85,7 +85,9 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
         const peerPhotoURL = peerPhotoHash ? process.env.API_PATH + `file?hash=${peerPhotoHash}` : undefined;
 
         // trigger bot message send
-        sendBotMessage(userID, { text: message, photo: { photoURL: peerPhotoURL } }, 'Markdown')
+        const messageData = { text: message, photo: { photoURL: peerPhotoURL } };
+        console.log('Sending match message', messageData);
+        sendBotMessage(userID, messageData, 'Markdown')
             .then(() => {})
             .catch((e) => {
                 console.log(e);
