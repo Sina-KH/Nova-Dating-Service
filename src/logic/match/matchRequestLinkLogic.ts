@@ -26,6 +26,11 @@ export async function matchRequestLinkLogic(
     const connectionLink = peerUser._id?.startsWith('t_')
         ? '[' + peerUserFullName + '](tg://user?id=' + peerUser._id?.substring(2) + ')'
         : peerUserFullName;
+    if (!peerUser._id?.startsWith('t_')) {
+        console.log('error in peer user _id,', {
+            peerUser
+        });
+    }
 
     // message to send
     const message = localized(DictionaryKeys.chatLink, language) + '\n\n' + connectionLink;

@@ -17,7 +17,7 @@ export async function matchHappenedLogic(userIDs: Identifier<IUser>[]) {
         userIDs[1],
         IMatchProps.users,
         // languageCode is used to create bot messages and will be removed from final response
-        IUserProps.matchedUsers + ' _id birthdate languageCode'
+        IUserProps.matchedUsers + ' birthdate languageCode'
     );
     if (!match) throw new Error();
 
